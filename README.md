@@ -1,5 +1,3 @@
-# UDEMY-30-projects.
-
 # *****************************************************************************************************
 #  Guessing a number game.
 # *****************************************************************************************************
@@ -290,4 +288,262 @@
 # *****************************************************************************************************
 # image download from url
 # *****************************************************************************************************
+#
+# import os
+# import requests
+# def img_extensions(img_url: str) -> str | None:
+#     extensions : list[str] = ['.png','.jpeg','.jpg','.gif','.svg']
+#     for e in extensions:
+#         if e in img_url:
+#             return e
+# def img_download(img_url : str,name: str,folder : str = None ):
+#     if e:=img_extensions(img_url):
+#         if folder:
+#             img_name: str = f'{folder}/{name}{e}'
+#         else:
+#             img_name : str = f'{name}{e}'
+#     else:
+#         raise Exception('Image extension could not be located')
+#     if os.path.isfile(img_name):
+#         raise Exception('File name already exists......')
+#     try:
+#         img_content : bytes = requests.get(img_url).content
+#         with open(img_name, 'wb') as handler:
+#             handler.write(img_content)
+#             print(f'Downloaded : {img_name} successfully')
+#     except Exception as ex:
+#         print(f'Error: {ex}')
+# if __name__ == '__main__':
+#     input_url: str = input('Enter a url: ')
+#     input_name : str = input('Enter a name for image: ')
+#     print('Downloading...')
+#     img_download(input_url,input_name,folder = '/Users/cskraju/pythonProject/openpyxl/Linesfile and attriubutes file./Python projects udemy/Images')
 
+# *****************************************************************************************************
+# GUI tax calculator
+# *****************************************************************************************************
+#
+# import customtkinter as ctk
+# class TaxCalculator:
+#     def __init__(self):
+#         # Initialize our window
+#         self.window = ctk.CTk()
+#         self.window.title('Tax Calculator')
+#         self.window.geometry('350x230')
+#         self.window.resizable(True, True)
+#         # Widget padding
+#         self.padding: dict = {'padx': 20, 'pady': 15}
+#         # Income label and entry
+#         self.income_label = ctk.CTkLabel(self.window, text='Enter Income:')
+#         self.income_label.grid(row=0, column=0, **self.padding)
+#         self.income_entry = ctk.CTkEntry(self.window)
+#         self.income_entry.grid(row=0, column=1, **self.padding)
+#         # Tax label and entry
+#         self.tax_rate_label = ctk.CTkLabel(self.window, text='Enter tax Percent:')
+#         self.tax_rate_label.grid(row=1, column=0, **self.padding)
+#         self.tax_rate_entry = ctk.CTkEntry(self.window)
+#         self.tax_rate_entry.grid(row=1, column=1, **self.padding)
+#         #  Result label and entry
+#         self.result_label = ctk.CTkLabel(self.window, text='Tax amount :')
+#         self.result_label.grid(row=2, column=0, **self.padding)
+#         self.result_entry = ctk.CTkEntry(self.window)
+#         self.result_entry.insert(0, '0')
+#         self.result_entry.grid(row=2, column=1, **self.padding)
+#         # Calculate button
+#         self.calculate_button = ctk.CTkButton(self.window, text='Click to Calculate', command=self.calculate_tax)
+#         self.calculate_button.grid(row=3, column=0, **self.padding)
+#     def update_result(self, text: str):
+#         """Updates the result of the tax field."""
+#
+#         self.result_entry.delete(0, ctk.END)
+#         self.result_entry.insert(0, text)
+#     def calculate_tax(self):
+#         """Calculates the total tax based on the percent."""
+#         try:
+#             income: float = float(self.income_entry.get())
+#             tax_rate: float = float(self.tax_rate_entry.get())
+#             self.update_result(f'₹ {income * (tax_rate / 100):,.2f}')
+#         except ValueError:
+#             self.update_result('Invalid input')
+#     def run(self):
+#         """Runs the tkinter app."""
+#         self.window.mainloop()
+# if __name__ == '__main__':
+#     tc = TaxCalculator()
+#     tc.run()
+
+# import tkinter as tk
+#
+# class CalculatorApp:
+#     def __init__(self, master):
+#         self.master = master
+#         self.master.title("Calculator")
+#
+#         # Entry widget to display the input and result
+#         self.entry = tk.Entry(master, width=20, font=('Arial', 14), bd=5, insertwidth=4, justify='right')
+#         self.entry.grid(row=0, column=0, columnspan=4)
+#
+#         # Buttons for digits and arithmetic operations
+#         buttons = [
+#             '7', '8', '9', '/',
+#             '4', '5', '6', '*',
+#             '1', '2', '3', '-',
+#             '0', '.', '=', '+'
+#         ]
+#
+#         # Dictionary to store the operator and the corresponding function
+#         self.operators = {'/': self.divide, '*': self.multiply, '-': self.subtract, '+': self.add}
+#
+#         # Create and place the buttons
+#         row_val = 1
+#         col_val = 0
+#         for button_text in buttons:
+#             tk.Button(master, text=button_text, width=5, height=2, command=lambda btn=button_text: self.on_button_click(btn)).grid(row=row_val, column=col_val)
+#             col_val += 1
+#             if col_val > 3:
+#                 col_val = 0
+#                 row_val += 1
+#
+#         # Variables to store previous result and current operator
+#         self.previous_result = 0
+#         self.current_operator = None
+#
+#     def on_button_click(self, button_text):
+#         if button_text.isdigit() or button_text == '.':
+#             # If the button clicked is a digit or decimal point
+#             current_text = self.entry.get()
+#             new_text = current_text + button_text
+#             self.entry.delete(0, tk.END)
+#             self.entry.insert(0, new_text)
+#         elif button_text in {'/', '*', '-', '+'}:
+#             # If the button clicked is an arithmetic operator
+#             self.calculate_result()
+#             self.current_operator = button_text
+#             self.previous_result = float(self.entry.get())
+#             self.entry.delete(0, tk.END)
+#         elif button_text == '=':
+#             # If the button clicked is the equal sign
+#             self.calculate_result()
+#             self.current_operator = None
+#
+#     def calculate_result(self):
+#         if self.current_operator and self.entry.get():
+#             current_value = float(self.entry.get())
+#             operation_function = self.operators.get(self.current_operator)
+#             if operation_function:
+#                 result = operation_function(self.previous_result, current_value)
+#                 self.entry.delete(0, tk.END)
+#                 self.entry.insert(0, str(result))
+#                 self.previous_result = result
+#
+#     # Define arithmetic operation functions
+#     def add(self, x, y):
+#         return x + y
+#
+#     def subtract(self, x, y):
+#         return x - y
+#
+#     def multiply(self, x, y):
+#         return x * y
+#
+#     def divide(self, x, y):
+#         if y != 0:
+#             return x / y
+#         else:
+#             return "Error"
+#
+# if __name__ == "__main__":
+#     root = tk.Tk()
+#     app = CalculatorApp(root)
+#     root.mainloop()
+
+# *****************************************************************************************************
+# Emotion text to emoji converter
+# *****************************************************************************************************
+# import sys
+# from textblob import TextBlob
+# from dataclasses import dataclass
+# @dataclass
+# class Mood:
+#     emoji : str
+#     sentiment : float
+# def get_mood(input_text : str, *, sensitivity : float) -> Mood:
+#     polarity: float = TextBlob(input_text).sentiment.polarity
+#     friendly_threshold: float = sensitivity
+#     hostile_threshold: float = -sensitivity
+#     if polarity >= friendly_threshold:
+#         return Mood('😍', polarity)
+#     elif polarity <= hostile_threshold:
+#         return Mood('😡',polarity)
+#     else:
+#         return Mood('😐',polarity)
+# def run_bot():
+#     print('enter some text to get emoji')
+#     while True:
+#         user_input : str = input('You:-')
+#         mood: Mood = get_mood(user_input,sensitivity = 0.3)
+#         print(f'Bot:- {mood.emoji} {mood.sentiment}')
+#         if user_input == 'exit':
+#             sys.exit()
+# if __name__ == '__main__':
+#     run_bot()
+#
+
+# *****************************************************************************************************
+# PDF reader
+# *****************************************************************************************************
+
+# import re
+# from collections import Counter
+# from PyPDF2 import PdfReader
+# def text_in_pdf(pdf_file: str) -> list[str]:
+#     with open(pdf_file, 'rb') as pdf:
+#         reader = PdfReader(pdf, strict=False)
+#         print('pages: ', len(reader.pages))
+#         print('-' * 20)
+#         pdf_text: list[str] = [page.extract_text() for page in reader.pages]
+#         return pdf_text
+# def count_words(text_list: list[str]) -> Counter:
+#     all_words: list[str] = []
+#     for text in text_list:
+#         split_text: list[str] = re.split(r'\s+|[,;?!.-}]\s*', text.lower())
+#         all_words += [word for word in split_text if word]
+#     return Counter(all_words)
+# def main():
+#     textinpdf: list[str] = text_in_pdf('/Users/cskraju/pythonProject/openpyxl/Linesfile and attriubutes file./Python projects udemy/sample.pdf')
+#     counter: Counter = count_words(text_list=textinpdf)
+#     for word, mention in counter.most_common(10):
+#         print(f'{word:10}: {mention} times')
+#     for page in textinpdf:
+#         print(page)
+#     print(textinpdf)
+#
+# if __name__ == '__main__':
+#     main()
+
+# *****************************************************************************************************
+# chat bot
+# *****************************************************************************************************
+# import difflib
+# from difflib import get_close_matches
+# def best_match(user_question: str,questions: dict) -> str | None:
+#     questions: list[str] = [q for q in questions]
+#     matches: list = get_close_matches(user_question,questions,n = 1,cutoff = 0.6)
+#     if matches:
+#         return matches[0]
+# def chat_bot(knowledge: dict):
+#     user_input: str = input('you:- ')
+#     best_match1: str | None = best_match(user_input,knowledge)
+#     if answer := knowledge.get(best_match1):
+#         print(f'Bot: {answer}')
+#     else:
+#         print(f'Bot: I do not understand...............')
+# if __name__ == '__main__':
+#     brain: dict = {'hello':'Hey there',
+#                    'how are you':'I am good thanks',
+#                    'bye':'see you'}
+#     chat_bot(knowledge=brain)
+
+# *****************************************************************************************************
+#
+# *****************************************************************************************************
